@@ -20,6 +20,8 @@ public class Explicitwait {
       String text=  eWait.until(ExpectedConditions.visibilityOfElementLocated
               (By.xpath("//div[contains(text(),'Process completed!')]"))).getText();
         System.out.println(text);
+        System.Out.println(text);
+          
 
 
     }
