@@ -1,0 +1,21 @@
+
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="/Users/mustafakeles/Selenium_Pratik">
+        <classes>
+
+
+            <class name="Basics.SortingCollections">
+            <methods>
+                <include name="sorting"/>
+            </methods>
+            </class>
+            <class name="Basics.TemelEylemler">
+                <methods>
+                    <include name="openBrowser"/></methods></class>
+
+            <class name="WindowHandling.Assignment"><methods><include name="handleAssignment"/></methods></class>
+            <class name="WindowHandling.WindowHandleSyntax"><methods><include name="windowHandle"/>
+                          <include name="iteratorHandle"/></methods></class>
+        </classes>
+    </test>
+</suite>

@@ -1,0 +1,85 @@
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.NumberToTextConverter;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.testng.annotations.Test;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class ExcelSheet {
+
+
+    public static ArrayList<String> dataSet(String testcaseName) throws IOException {
+
+        ArrayList<String> a=new ArrayList<String>();
+//java class objesi ile data alacagimiz baglantiyi olusturuyoruz. Bunun disindaki hersey Apache poi'den geliyor.
+        FileInputStream fis = new FileInputStream("/Users/mustafakeles/Desktop/DataSample.xlsx");
+//bu data uzerinde islem yapmamizi saglayan Apache poi class objesini olusturuyoruz ve onceki baglantiyi argumente koyuyoruz.
+        HSSFWorkbook workBook = new HSSFWorkbook(fis);
+//Kullanacagimiz sayfayi tanimlamak icin for loop ile sayfayi buluyoruz.
+        int sheets = workBook.getNumberOfSheets();
+        for (int i = 0; i < sheets; i++) {
+            if (workBook.getSheetName(i).equalsIgnoreCase("test1")) {
+                HSSFSheet sheet = workBook.getSheetAt(i);
+                //Satirlari iterator metoduyla tarayip aradigimiz satiri buluyoruz
+                Iterator<Row> rows = sheet.iterator();// sheet is collection of rows
+                Row firstrow = rows.next();
+                Iterator<Cell> ce = firstrow.cellIterator();//row is collection of cells
+                int k=0;
+                int coloumn = 0;
+                while(ce.hasNext())
+                { Cell value=ce.next();
+                if(value.getStringCellValue().equalsIgnoreCase("TestCases"))
+                    {
+                        coloumn=k;
+                    }
+                    k++;
+                }
+////once coloumn is identified then scan entire testcase coloum to identify purcjhase testcase row
+                while(rows.hasNext())
+                {
+
+                    Row r=rows.next();
+
+                    if(r.getCell(coloumn).getStringCellValue().equalsIgnoreCase(testcaseName))
+                    {
+
+////after you grab purchase testcase row = pull all the data of that row and feed into test
+
+                        Iterator<Cell>  cv=r.cellIterator();
+                        while(cv.hasNext())
+                        {
+                            Cell c= cv.next();
+                            if(c.getCellTypeEnum()== CellType.STRING)
+                            {
+
+                                a.add(c.getStringCellValue());
+                            }
+                            else{
+
+                                a.add(NumberToTextConverter.toText(c.getNumericCellValue()));
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return a;
+    }
+
+
+    @Test
+    public void getDatafromExcell() throws IOException {
+
+        dataSet("11");
+    }
+}
