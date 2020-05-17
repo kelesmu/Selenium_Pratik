@@ -22,6 +22,7 @@ public class CheckBox {
         System.out.println(checkBox1.isSelected());
         checkBox1.click();
         System.out.println(checkBox1.isSelected());
+        System.out.println();
 
 System.out.println(driver.findElements(By.xpath("//input[@type='checkbox']")).size());
     }
