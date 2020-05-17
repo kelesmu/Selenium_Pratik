@@ -66,7 +66,7 @@ ArrayList<Double> copiedList=new ArrayList<Double>();
         }
        Collections.sort(copiedList);
         Assert.assertEquals(convertedOriginalPriceList,copiedList);
-
+        System.out.println(priceListText);
 
     }
 }
